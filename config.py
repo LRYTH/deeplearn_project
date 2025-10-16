@@ -1,0 +1,5 @@
+class Config:
+    LEARNING_RATE = 0.01
+    EPOCHS = 1000
+    BATCH_SIZE = 100
+    DROPOUT_RATE = 0.5
