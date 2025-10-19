@@ -12,12 +12,15 @@ from utils.init import init_weights
 # 定义数据
 config = Config()
 config.LEARNING_RATE = 0.001
+config.BATCH_SIZE = 64
+config.EPOCHS = 10
 transforms = transforms.Compose([transforms.ToTensor(), transforms.Resize((224, 224))])
 train_loader, test_loader = get_mnist_loader(batch_size=config.BATCH_SIZE, transforms=transforms)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # 网络
 net = NinNet()
-
+net.to(device)
 
 # 初始化权重
 net.apply(init_weights)
@@ -30,6 +33,7 @@ for epoch in range(1, config.EPOCHS+1):
     net.train()
     total_loss, total_acc, total_count = 0, 0, 0
     for X, y in train_loader:
+        X, y = X.to(device), y.to(device)
         y_hat = net(X)
         l = loss(y_hat, y)
         optimizer.zero_grad()
@@ -42,7 +46,7 @@ for epoch in range(1, config.EPOCHS+1):
 
     train_acc = total_acc / total_count
     train_loss = total_loss / total_count
-    test_acc = evaluate_accuracy(net, test_loader)
+    test_acc = evaluate_accuracy(net, test_loader, device)
 
     train_losses.append(train_loss)
     train_accs.append(train_acc)

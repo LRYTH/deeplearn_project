@@ -24,7 +24,7 @@ class Inception(nn.Module):
         return torch.cat((p1, p2, p3, p4), dim=1)
 
 class GoogLeNet(nn.Module):
-    def __init__(self, in_channels=1):
+    def __init__(self, in_channels=3):
         super(GoogLeNet, self).__init__()
         self.b1 = nn.Sequential(
             nn.Conv2d(in_channels, 64, kernel_size=7, stride=2, padding=3),
@@ -69,4 +69,3 @@ class GoogLeNet(nn.Module):
         x = self.b5(x)
         x = self.fc(x)
         return x
-
