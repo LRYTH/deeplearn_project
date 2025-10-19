@@ -16,8 +16,11 @@ def get_mnist_loader(batch_size, transforms):
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
     return train_loader, test_loader
 
-train_loader, test_loader = get_mnist_loader(batch_size=64, transforms=transforms.ToTensor())
-for X, y in train_loader:
-    print(X.shape)
-    print(y.shape)
-    break
+
+if __name__ == '__main__':
+    train_loader, test_loader = get_mnist_loader(batch_size=64, transforms=transforms.ToTensor())
+    for X, y in train_loader:
+        print(X.shape)
+        print(y.shape)
+        break
+
